@@ -8,7 +8,33 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <NavigationView x:Name="NavView"
+                    ItemInvoked="NavView_ItemInvoked"
+                    Loaded="NavView_Loaded"
+                    BackRequested="NavView_BackRequested">
 
-    </Grid>
+        <NavigationView.MenuItems>
+            <NavigationViewItemHeader Content="Siebel UWP"/>
+            <NavigationViewItem x:Uid="HomeNavItem" Content="Customer Lines" Tag="Home">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE10F;"/>
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItemSeparator/>
+            <NavigationViewItem x:Uid="cstDetailsItem" Icon="AllApps" Content="Customer Details" Tag="details"/>
+            <NavigationViewItem x:Uid="cstContacts" Icon="People" Content="Contacts" Tag="contacts"/>
+            <NavigationViewItem x:Uid="cstProfiles" Icon="AllApps" Content="Profiles" Tag="profiles"/>
+            <NavigationViewItem x:Uid="cstPremise" Icon="AllApps" Content="Premise" Tag="premise"/>
+            <NavigationViewItem x:Uid="cstidv" Icon="AllApps" Content="Age And ID Verification" Tag="idv"/>
+            <NavigationViewItem x:Uid="cstAddresses" Icon="AllApps" Content="Addresses" Tag="addresses"/>
+            <NavigationViewItem x:Uid="cstcreditvetting" Icon="AllApps" Content="Credit Vetting" Tag="creditvetting"/>
+            <NavigationViewItem x:Uid="cstOrdersItem" Icon="AllApps" Content="Orders" Tag="orders"/>
+
+        </NavigationView.MenuItems>
+
+
+
+    </NavigationView>
+
+
 </Page>
