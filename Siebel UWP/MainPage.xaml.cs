@@ -28,14 +28,9 @@ namespace Siebel_UWP
             this.InitializeComponent();
         }
 
-        private void NavView_Loaded(object sender, RoutedEventArgs e)
+        //Loading nav items into menu 
+        private void NavView_Loaded(Object sender, RoutedEventArgs e)
         {
-            // you can also add items in code behind
-            NavView.MenuItems.Add(new NavigationViewItemSeparator());
-            NavView.MenuItems.Add(new NavigationViewItem()
-            { Content = "My content", Icon = new SymbolIcon(Symbol.Folder), Tag = "content" });
-
-            // set the initial SelectedItem 
             foreach (NavigationViewItemBase item in NavView.MenuItems)
             {
                 if (item is NavigationViewItem && item.Tag.ToString() == "home")
@@ -45,58 +40,62 @@ namespace Siebel_UWP
                 }
             }
 
-            ContentFrame.Navigated += On_Navigated;
+            contentFrame.Navigated += On_Navigated;
 
-            // add keyboard accelerators for backwards navigation
+            //Adding keyboard detection/accelorators
             KeyboardAccelerator GoBack = new KeyboardAccelerator();
             GoBack.Key = VirtualKey.GoBack;
             GoBack.Invoked += BackInvoked;
-            KeyboardAccelerator AltLeft = new KeyboardAccelerator();
-            AltLeft.Key = VirtualKey.Left;
-            AltLeft.Invoked += BackInvoked;
             this.KeyboardAccelerators.Add(GoBack);
-            this.KeyboardAccelerators.Add(AltLeft);
-            // ALT routes here
-            AltLeft.Modifiers = VirtualKeyModifiers.Menu;
-
         }
 
         private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             if (args.IsSettingsInvoked)
             {
-                ContentFrame.Navigate(typeof(SettingsPage));
+                contentFrame.Navigate(typeof(SettingsPage));
             }
-            else
-            {
-                // find NavigationViewItem with Content that equals InvokedItem
-                var item = sender.MenuItems.OfType<NavigationViewItem>().First(x => (string)x.Content == (string)args.InvokedItem);
-                NavView_Navigate(item as NavigationViewItem);
-            }
+
         }
 
         private void NavView_Navigate(NavigationViewItem item)
         {
-            switch (item.Tag)
+            switch(item.Tag)
             {
-                case "home":
-                    ContentFrame.Navigate(typeof(HomePage));
+                case "Home":
+                    contentFrame.Navigate(typeof(MainPage));
                     break;
 
-                case "apps":
-                    ContentFrame.Navigate(typeof(AppsPage));
+                case "details":
+                    contentFrame.Navigate(typeof(CustomerDetails));
                     break;
 
-                case "games":
-                    ContentFrame.Navigate(typeof(GamesPage));
+                case "contacts":
+                    contentFrame.Navigate(typeof(Contacts));
                     break;
 
-                case "music":
-                    ContentFrame.Navigate(typeof(MusicPage));
+                case "profiles":
+                    contentFrame.Navigate(typeof(Profiles));
                     break;
 
-                case "content":
-                    ContentFrame.Navigate(typeof(MyContentPage));
+                case "premise":
+                    contentFrame.Navigate(typeof(Premise));
+                    break;
+
+                case "idv":
+                    contentFrame.Navigate(typeof(IDV));
+                    break;
+
+                case "addresses":
+                    contentFrame.Navigate(typeof(Address));
+                    break;
+
+                case "creditvetting":
+                    contentFrame.Navigate(typeof(CreditVetting));
+                    break;
+
+                case "orders":
+                    contentFrame.Navigate(typeof(Orders));
                     break;
             }
         }
@@ -116,16 +115,15 @@ namespace Siebel_UWP
         {
             bool navigated = false;
 
-            // don't go back if the nav pane is overlayed
-            if (NavView.IsPaneOpen && (NavView.DisplayMode == NavigationViewDisplayMode.Compact || NavView.DisplayMode == NavigationViewDisplayMode.Minimal))
+            //Stops the user going back if the nav pane if overlayed
+            if(NavView.IsPaneOpen && (NavView.DisplayMode == NavigationViewDisplayMode.Compact || NavView.DisplayMode == NavigationViewDisplayMode.Minimal))
             {
                 return false;
             }
             else
             {
-                if (ContentFrame.CanGoBack)
+                if(contentFrame.CanGoBack)
                 {
-                    ContentFrame.GoBack();
                     navigated = true;
                 }
             }
@@ -134,29 +132,34 @@ namespace Siebel_UWP
 
         private void On_Navigated(object sender, NavigationEventArgs e)
         {
-            NavView.IsBackEnabled = ContentFrame.CanGoBack;
+            NavView.IsBackEnabled = contentFrame.CanGoBack;
 
-            if (ContentFrame.SourcePageType == typeof(SettingsPage))
+            if (contentFrame.SourcePageType == typeof(SettingsPage))
             {
                 NavView.SelectedItem = NavView.SettingsItem as NavigationViewItem;
             }
+
             else
             {
                 Dictionary<Type, string> lookup = new Dictionary<Type, string>()
-        {
-            {typeof(HomePage), "home"},
-            {typeof(AppsPage), "apps"},
-            {typeof(GamesPage), "games"},
-            {typeof(MusicPage), "music"},
-            {typeof(MyContentPage), "content"}
-        };
+                {
+                    {typeof(MainPage), "Home"},
+                    {typeof(CustomerDetails), "details"},
+                    {typeof(Contacts), "contacts"},
+                    {typeof(Address), "addresses"},
+                    {typeof(CreditVetting), "creditvetting"},
+                    {typeof(IDV), "idv" },
+                    {typeof(Premise), "premise" },
+                    {typeof(Profiles), "profiles" },
+                    {typeof(Orders), "orders" }
+                };
 
-                String stringTag = lookup[ContentFrame.SourcePageType];
+                String stringtag = lookup[contentFrame.SourcePageType];
 
-                // set the new SelectedItem  
+                //Sets the new form
                 foreach (NavigationViewItemBase item in NavView.MenuItems)
                 {
-                    if (item is NavigationViewItem && item.Tag.Equals(stringTag))
+                    if (item is NavigationViewItem && item.Tag.Equals(stringtag))
                     {
                         item.IsSelected = true;
                         break;

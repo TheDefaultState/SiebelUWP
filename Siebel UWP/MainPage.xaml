@@ -64,9 +64,5 @@
                 </TransitionCollection>
             </Frame.ContentTransitions>
         </Frame>
-
-
     </NavigationView>
-
-
 </Page>
