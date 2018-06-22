@@ -40,62 +40,65 @@ namespace Siebel_UWP
                 }
             }
 
-            contentFrame.Navigated += On_Navigated;
+            rootFrame.Navigated += On_Navigated;
 
             //Adding keyboard detection/accelorators
             KeyboardAccelerator GoBack = new KeyboardAccelerator();
             GoBack.Key = VirtualKey.GoBack;
             GoBack.Invoked += BackInvoked;
-            this.KeyboardAccelerators.Add(GoBack);
         }
 
         private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             if (args.IsSettingsInvoked)
             {
-                contentFrame.Navigate(typeof(SettingsPage));
+                rootFrame.Navigate(typeof(SettingsPage));
+                NavView.Header = "Settings";
             }
-
+            else
+            {
+                NavView.Header = "Nav";
+            }
         }
 
         private void NavView_Navigate(NavigationViewItem item)
         {
-            switch(item.Tag)
+            switch (item.Tag)
             {
                 case "Home":
-                    contentFrame.Navigate(typeof(MainPage));
+                    rootFrame.Navigate(typeof(MainPage));
                     break;
 
                 case "details":
-                    contentFrame.Navigate(typeof(CustomerDetails));
+                    rootFrame.Navigate(typeof(CustomerDetails));
                     break;
 
                 case "contacts":
-                    contentFrame.Navigate(typeof(Contacts));
+                    rootFrame.Navigate(typeof(Contacts));
                     break;
 
                 case "profiles":
-                    contentFrame.Navigate(typeof(Profiles));
+                    rootFrame.Navigate(typeof(Profiles));
                     break;
 
                 case "premise":
-                    contentFrame.Navigate(typeof(Premise));
+                    rootFrame.Navigate(typeof(Premise));
                     break;
 
                 case "idv":
-                    contentFrame.Navigate(typeof(IDV));
+                    rootFrame.Navigate(typeof(IDV));
                     break;
 
                 case "addresses":
-                    contentFrame.Navigate(typeof(Address));
+                    rootFrame.Navigate(typeof(Address));
                     break;
 
                 case "creditvetting":
-                    contentFrame.Navigate(typeof(CreditVetting));
+                    rootFrame.Navigate(typeof(CreditVetting));
                     break;
 
                 case "orders":
-                    contentFrame.Navigate(typeof(Orders));
+                    rootFrame.Navigate(typeof(Orders));
                     break;
             }
         }
@@ -122,7 +125,7 @@ namespace Siebel_UWP
             }
             else
             {
-                if(contentFrame.CanGoBack)
+                if(rootFrame.CanGoBack)
                 {
                     navigated = true;
                 }
@@ -132,9 +135,9 @@ namespace Siebel_UWP
 
         private void On_Navigated(object sender, NavigationEventArgs e)
         {
-            NavView.IsBackEnabled = contentFrame.CanGoBack;
+            NavView.IsBackEnabled = rootFrame.CanGoBack;
 
-            if (contentFrame.SourcePageType == typeof(SettingsPage))
+            if (rootFrame.SourcePageType == typeof(SettingsPage))
             {
                 NavView.SelectedItem = NavView.SettingsItem as NavigationViewItem;
             }
@@ -154,7 +157,7 @@ namespace Siebel_UWP
                     {typeof(Orders), "orders" }
                 };
 
-                String stringtag = lookup[contentFrame.SourcePageType];
+                String stringtag = lookup[rootFrame.SourcePageType];
 
                 //Sets the new form
                 foreach (NavigationViewItemBase item in NavView.MenuItems)

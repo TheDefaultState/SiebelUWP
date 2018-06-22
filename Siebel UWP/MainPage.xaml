@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource SystemControlAcrylicElementBrush}">
 
     <NavigationView x:Name="NavView"
                     ItemInvoked="NavView_ItemInvoked"
@@ -43,21 +43,21 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Style="{StaticResource TitleTextBlockStyle}"
-                               FontSize="28"
-                               VerticalAlignment="Top"
-                               Text="Customer Name"/>
+                           FontSize="28"
+                           VerticalAlignment="Center"
+                           Text="Customer Name"/>
                     <CommandBar Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Top"
-                                DefaultLabelPosition="Right"
-                                Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            DefaultLabelPosition="Right"
+                            Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
                         <AppBarButton Label="Refresh" Icon="Refresh"/>
                     </CommandBar>
                 </Grid>
             </DataTemplate>
         </NavigationView.HeaderTemplate>
 
-        <Frame x:Name="contentFrame" Margin="24">
+        <Frame x:Name="rootFrame" Margin="24">
             <Frame.ContentTransitions>
                 <TransitionCollection>
                     <NavigationThemeTransition/>
